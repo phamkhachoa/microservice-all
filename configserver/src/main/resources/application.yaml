@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: configserver
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/phamkhachoa/microservice-config.git
+          clone-on-start: true
+          default-label: main
+          skip-ssl-validation: true
+          search-paths:
+            - /{profile}  # se lan cac config o trong folder dev, voi moi truong sit thi de la sit
+
+server:
+  port: 8071
+
+##spring.profiles.active=native
+#spring.profiles.active=git
+#
+##spring.cloud.config.server.native.search-locations=classpath:/config
+##spring.cloud.config.server.native.search-locations=file:///C://config
+#spring.cloud.config.server.git.uri=https://github.com/phamkhachoa/microservice-config.git
+#spring.cloud.config.server.git.clone-on-start=true
+#spring.cloud.config.server.git.default-label=main
+#
+#server.port=8071
+#
+#encrypt.key=eazybytes
+#
+##spring.sleuth.sampler.percentage=1
+##spring.zipkin.baseUrl=http://localhost:9411/
+##spring.zipkin.sender.type=rabbit
+##spring.zipkin.rabbitmq.queue=zipkin
+##spring.rabbitmq.host=localhost
+##spring.rabbitmq.port=5672
+##spring.rabbitmq.username=guest
+##spring.rabbitmq.password=guest
