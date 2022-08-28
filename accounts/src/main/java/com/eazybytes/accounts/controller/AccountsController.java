@@ -79,8 +79,8 @@ public class AccountsController {
 
 	
 	@PostMapping("/myCustomerDetails")
-	@CircuitBreaker(name = "detailsForCustomerSupportApp",fallbackMethod ="myCustomerDetailsFallBack")
-	@Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
+//	@CircuitBreaker(name = "detailsForCustomerSupportApp",fallbackMethod ="myCustomerDetailsFallBack")
+	@Retry(name = "retryForCustomerDetails")
 	public CustomerDetails myCustomerDetails(@RequestHeader("eazybank-correlation-id") String correlationid,@RequestBody Customer customer) {
 		logger.info("myCustomerDetails() method started");
 		Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
@@ -96,7 +96,7 @@ public class AccountsController {
 
 	}
 
-	private CustomerDetails myCustomerDetailsFallBack(@RequestHeader("eazybank-correlation-id") String correlationid,Customer customer, Throwable t) {
+	private CustomerDetails myCustomerDetailsFallBack1(@RequestHeader("eazybank-correlation-id") String correlationid,Customer customer, Throwable t) {
 		Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
 		List<Loans> loans = loansFeignClient.getLoansDetails(correlationid,customer);
 		CustomerDetails customerDetails = new CustomerDetails();
